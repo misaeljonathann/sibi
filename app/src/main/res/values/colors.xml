@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="limeGreen">#8BC948</color>
+    <color name="white">#FFFFFF</color>
+    <color name="inactive">#A6979C</color>
+    <color name="black">#000000</color>
+    <color name="selected">#00574B</color>
+    <color name="bg">#416165</color>
+    <color name="notSelected">#ACB0BD</color>
+
+    //After Revamp
+    <color name="mColor">#029283</color>
+    <color name="colorOren">#E07831</color>
+    <color name="colorBlue">#223C5F</color>
+    <color name="black3333">#333333</color>
+    <color name="defaultColor">#CCCCCC</color>
+    <color name="greyf7f7f7">#f7f7f7</color>
+
+
+
+
+
+
+
+</resources>
