@@ -25,13 +25,25 @@ android {
     }
     dataBinding.enabled = true
     buildToolsVersion = '28.0.3'
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+            jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/']
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path file('../../../library/OpenCV-android-sdk/sdk/native/jni/OpenCV.mk')
+        }
+    }
 }
 
 dependencies {
     def nav_version = "2.2.0-alpha01"
     def camerax_version = "1.0.0-alpha04"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     //implementing scaling
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.squareup.picasso:picasso:2.5.2'
@@ -49,4 +61,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    compile 'org.tensorflow:tensorflow-android:1.13.1'
+//    implementation project(path: ':mobile-ffmpeg-full-4.3.1.LTS')
+
+    implementation group: 'org.bytedeco', name: 'javacv-platform', version: '1.5.3'
+    implementation project(path: ':openCVLibrary343')
+
+    implementation "io.reactivex.rxjava3:rxjava:3.0.0"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
 }
