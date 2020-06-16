@@ -2,7 +2,6 @@ package com.fasilkom.sibi.fragments;
 
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -11,11 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,20 +19,16 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fasilkom.sibi.R;
 import com.fasilkom.sibi.SimpleRecyclerAdapter;
-import com.fasilkom.sibi.activities.CameraActivity;
-import com.fasilkom.sibi.activities.DetailActivity;
 import com.fasilkom.sibi.databinding.CardItemBinding;
 import com.fasilkom.sibi.databinding.FragmentSibiBinding;
 import com.fasilkom.sibi.models.CardModel;
-import com.fasilkom.sibi.models.PagerTutorialModel;
+import com.fasilkom.sibi.ui.signtotext.PickerActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SibiFragment extends Fragment {
     private String fragType;
@@ -175,7 +166,7 @@ public class SibiFragment extends Fragment {
         startNoTutorial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                Intent intent = new Intent(getActivity(), PickerActivity.class);
                 startActivity(intent);
             }
         });

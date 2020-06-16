@@ -89,8 +89,6 @@ public class FrameClassifier {
         tensorFlowInference.feed(inputName, inputData, 1, inputData.length/ NUM_OF_MOBNET_FEATURES, NUM_OF_MOBNET_FEATURES);
         Trace.endSection();
 
-        Log.d("ProIn", "" + inputData.length/ NUM_OF_MOBNET_FEATURES);
-
         // Run the inference call
         Trace.beginSection("Run");
         tensorFlowInference.run(outputNames);
@@ -207,7 +205,7 @@ public class FrameClassifier {
 
         /* Expand frame length */
         if (pack.length <= 13) {
-            Log.d("Equalizing", "less");
+//            Log.d("Equalizing", "less");
 
             float[] lastFrameData = Arrays.copyOfRange(
                     inputData,
@@ -225,14 +223,14 @@ public class FrameClassifier {
                 }
 
             }
-            Log.d("Equalizing", "frame feature: " + frameFeature.length);
+//            Log.d("Equalizing", "frame feature: " + frameFeature.length);
 
         /* Cut frame length */
         } else {
 
             // todo : Improve
 
-            Log.d("Equalizing", "more " + pack.length);
+//            Log.d("Equalizing", "more " + pack.length);
 
             FrameSequence[] frameSequences = new FrameSequence[pack.length];
 
@@ -277,7 +275,7 @@ public class FrameClassifier {
             }
 
             frameFeature = concatFrameSequence(frameSequences);
-            Log.d("Equalizing", "frame feature: " + frameFeature.length);
+//            Log.d("Equalizing", "frame feature: " + frameFeature.length);
 
         }
 

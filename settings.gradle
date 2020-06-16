@@ -1,2 +1,2 @@
-include ':app', ':mobile-ffmpeg-full-4.3.1.LTS'
+include ':app'
 include ':openCVLibrary343'

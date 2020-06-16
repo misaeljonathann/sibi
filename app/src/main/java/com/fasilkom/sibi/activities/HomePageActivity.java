@@ -4,8 +4,12 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.fasilkom.sibi.BaseApplication;
 import com.fasilkom.sibi.ModelProvider;
 import com.fasilkom.sibi.R;
+import com.fasilkom.sibi.di.component.ActivityComponent;
+import com.fasilkom.sibi.di.component.DaggerActivityComponent;
+import com.fasilkom.sibi.di.module.ActivityModule;
 import com.fasilkom.sibi.fragments.SibiFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,10 +30,14 @@ import org.opencv.android.OpenCVLoader;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 public class HomePageActivity extends AppCompatActivity {
 
+    @Inject
+    ModelProvider modelProvider;
+
     String TAG = "HomePageActivity";
-//    TODO: add disposable RxJava
 
     final SibiFragment sibiFragment = SibiFragment.newInstance("SIBI");
     final SibiFragment bisindoFragment = SibiFragment.newInstance("BISINDO");
@@ -65,12 +73,12 @@ public class HomePageActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setNavMenuItemThemeColors(getResources().getColor(R.color.mColor));
         loadFragment(activeFrag);
+        injectDependency();
         try {
-            ModelProvider.getInstance().loadClassifier(getApplicationContext(), "all");
+            modelProvider.loadClassifier(getApplicationContext(), "all");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -81,8 +89,6 @@ public class HomePageActivity extends AppCompatActivity {
             {
                 case LoaderCallbackInterface.SUCCESS:
                 {
-                    //javaCameraView.enableView();
-                    //mOpenCvCameraView.enableView();
                     Log.i(TAG, "callback: OpenCV loaded successfully.");
                 } break;
                 default:
@@ -170,6 +176,11 @@ public class HomePageActivity extends AppCompatActivity {
 
         navigation.setItemTextColor(navMenuTextList);
         navigation.setItemIconTintList(navMenuIconList);
+    }
+
+    private void injectDependency() {
+        ActivityComponent activityComponent = ((BaseApplication) getApplication()).getActivityComponent();
+        activityComponent.inject(this);
     }
 
 }

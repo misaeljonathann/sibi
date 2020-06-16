@@ -4,7 +4,6 @@ import android.content.res.AssetManager;
 import android.os.Trace;
 import android.util.Log;
 
-import com.fasilkom.sibi.interfaces.Classifier;
 import com.fasilkom.sibi.tensorflow.FileUtils;
 import com.fasilkom.sibi.tensorflow.outputs.LSTM.LSTMResult;
 
@@ -19,8 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-
-public class TextClassifier implements Classifier {
+public class TextClassifier {
 
     // Config values.
     private String inputName;
@@ -69,8 +67,6 @@ public class TextClassifier implements Classifier {
 //            Log.d("LayerName", operation.name());
 //        }
 
-        Log.d("InputData", "Size : " + inputData.length);
-
         Trace.beginSection("Start Classifier");
 
         // Copy the input data to TensorFlow
@@ -112,8 +108,6 @@ public class TextClassifier implements Classifier {
         return output;
     }
 
-
-    @Override
     public ArrayList<LSTMResult[]> predictWord(AssetManager assetManager) throws IOException {
         int inputSize = (int) this.numOfFeatures * (int) this.numOfTimeStep;
 

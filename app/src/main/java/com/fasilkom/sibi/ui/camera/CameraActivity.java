@@ -1,4 +1,4 @@
-package com.fasilkom.sibi.activities;
+package com.fasilkom.sibi.ui.camera;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,10 +27,11 @@ import androidx.lifecycle.LifecycleOwner;
 import com.fasilkom.sibi.AutoFitTextureView;
 import com.fasilkom.sibi.ModelProvider;
 import com.fasilkom.sibi.R;
+import com.fasilkom.sibi.activities.CameraResultActivity;
 import com.fasilkom.sibi.databinding.ActivityCameraBinding;
-import com.fasilkom.sibi.tensorflow.ModelNullException;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -43,9 +44,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CameraActivity extends AppCompatActivity implements LifecycleOwner {
     private int REQUEST_CODE_PERMISSIONS = 101;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA",
-            "android.permission.WRITE_EXTERNAL_STORAGE",
-            "android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE"};
+    private final String[] REQUIRED_PERMISSIONS = new String[]{
+        "android.permission.CAMERA",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE"};
+
     private ActivityCameraBinding cameraBinding;
     private boolean isRecording = false;
     private VideoCapture videoCapture;
@@ -64,6 +68,8 @@ public class CameraActivity extends AppCompatActivity implements LifecycleOwner 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cameraBinding = DataBindingUtil.setContentView(this, R.layout.activity_camera);
+
+        Log.d("FilePath", filePath.getAbsolutePath());
 
         if (allPermissionsGranted()) {
             cameraBinding.viewFinder.post(new Runnable() {
@@ -147,39 +153,12 @@ public class CameraActivity extends AppCompatActivity implements LifecycleOwner 
                 Intent cameraResultIntent = new Intent(CameraActivity.this, CameraResultActivity.class);
                 cameraResultIntent.putExtra(CameraResultActivity.argPathCamera, newfile);
 
-                /* Model Call */
-
-                Log.d("RxJava", "Preparation");
-
 //                try {
-//                    ModelProvider.getInstance().runClassifier(
-//                            getApplicationContext(),
-//                            modelType,
-//                            videoFileName,
-//                            cameraPreview.getMeasuredHeight(),
-//                            cameraPreview.getMeasuredWidth());
-//                } catch (ModelNullException e) {
+//                    ModelProvider.getInstance().runClassifierV2(
+//                        "all");
+//                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-
-                Disposable disposable = Observable.create(emitter -> {
-                    System.out.println("processing item on thread " + Thread.currentThread().getName());
-                    emitter.onNext(ModelProvider.getInstance().runClassifier(
-                            getApplicationContext(),
-                            modelType,
-                            videoFileName,
-                            cameraPreview.getMeasuredHeight(),
-                            cameraPreview.getMeasuredWidth()));
-                    emitter.onComplete();
-                })
-                        .subscribeOn(Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnError(error -> Log.d("CameraActivity", "Rx Schedulers on error : " + error))
-                        .subscribe(result -> System.out.println("consuming item on thread " + Thread.currentThread().getName()));
-
-                startActivity(cameraResultIntent);
-
-                disposables.add(disposable);
             }
 
             @Override

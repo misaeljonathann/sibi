@@ -7,6 +7,7 @@ import com.fasilkom.sibi.tensorflow.FileUtils;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageClassifierFactory {
@@ -28,12 +29,17 @@ public class ImageClassifierFactory {
             int inputSize,
             int numOfChannel,
             int numOfClasses,
+            int numOfInferences,
             String inputName,
             String outputName
     ) throws IOException {
 
-        // labelFileName vs labelFilePath
         List<String> labels = FileUtils.getInstance().getLabels(assetManager, labelFileName);
+        ArrayList<TensorFlowInferenceInterface> tensorFlowInferenceInterfaces = new ArrayList<>();
+
+        for (int i = 0; i < numOfInferences; i++) {
+            tensorFlowInferenceInterfaces.add(new TensorFlowInferenceInterface(assetManager, modelFileName));
+        }
 
         return new ImageClassifier(
                 inputName,
@@ -42,7 +48,7 @@ public class ImageClassifierFactory {
                 numOfChannel,
                 numOfClasses,
                 labels,
-                new TensorFlowInferenceInterface(assetManager, modelFileName)
+                tensorFlowInferenceInterfaces
         );
     }
 }

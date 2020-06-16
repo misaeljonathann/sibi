@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.fasilkom.sibi"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -42,6 +42,7 @@ android {
 dependencies {
     def nav_version = "2.2.0-alpha01"
     def camerax_version = "1.0.0-alpha04"
+    def dagger_version = "2.28"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //implementing scaling
@@ -70,5 +71,12 @@ dependencies {
 
     implementation "io.reactivex.rxjava3:rxjava:3.0.0"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    api 'com.google.dagger:dagger:2.28'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.28'
+    api 'com.google.dagger:dagger-android:2.28'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.28'
+
+    compile "com.opencsv:opencsv:4.0"
 
 }

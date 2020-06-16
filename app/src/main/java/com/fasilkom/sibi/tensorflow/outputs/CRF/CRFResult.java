@@ -87,9 +87,9 @@ public class CRFResult {
         }
         Log.d("PackSize", "Package Size: " + packages.size());
 
-        for (Package item: packages) {
-            Log.d("CurrVal", "" + item.startIdx);
-        }
+//        for (Package item: packages) {
+//            Log.d("CurrVal", "" + item.startIdx);
+//        }
 
         return packages;
     }

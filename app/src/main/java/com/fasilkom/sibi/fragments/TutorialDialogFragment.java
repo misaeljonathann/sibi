@@ -16,9 +16,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fasilkom.sibi.R;
-import com.fasilkom.sibi.activities.CameraActivity;
+import com.fasilkom.sibi.ui.camera.CameraActivity;
 import com.fasilkom.sibi.adapter.CustomAdapter;
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 public class TutorialDialogFragment extends DialogFragment {
 
